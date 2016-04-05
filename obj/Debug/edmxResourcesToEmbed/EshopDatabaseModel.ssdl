@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EshopDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Kategorija">
+    <Key>
+      <PropertyRef Name="Nr" />
+    </Key>
+    <Property Name="Nr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Pavadinimas" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nuolaida" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pirkejas">
+    <Key>
+      <PropertyRef Name="Nr" />
+    </Key>
+    <Property Name="Nr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vardas" Type="char" MaxLength="15" Nullable="false" />
+    <Property Name="Pavarde" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Tel_NR" Type="char" MaxLength="12" />
+    <Property Name="El_pastas" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Miestas" Type="varchar" MaxLength="20" />
+    <Property Name="Gatve" Type="varchar" MaxLength="40" />
+    <Property Name="Namas" Type="varchar" MaxLength="8" />
+    <Property Name="Butas" Type="varchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="Preke">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Pavadinimas" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Kaina" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+    <Property Name="Kategorija" Type="int" />
+    <Property Name="Gamintojas" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Garantija" Type="smallint" Nullable="false" />
+    <Property Name="Liko" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Uzsakymas">
+    <Key>
+      <PropertyRef Name="Nr" />
+    </Key>
+    <Property Name="Nr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Pirkejas" Type="int" Nullable="false" />
+    <Property Name="Priemimo_data" Type="date" />
+    <Property Name="Sandeliavimo_data" Type="date" />
+    <Property Name="Atidavimo_data" Type="date" />
+  </EntityType>
+  <EntityType Name="Uzsakymo_info">
+    <Key>
+      <PropertyRef Name="Uzsakymas_ID" />
+      <PropertyRef Name="Preke_ID" />
+    </Key>
+    <Property Name="Uzsakymas_ID" Type="int" Nullable="false" />
+    <Property Name="Preke_ID" Type="int" Nullable="false" />
+    <Property Name="Kiekis" Type="int" Nullable="false" />
+    <Property Name="Kaina" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Preke_ToKategorija">
+    <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="0..1" />
+    <End Role="Preke" Type="Self.Preke" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorija">
+        <PropertyRef Name="Nr" />
+      </Principal>
+      <Dependent Role="Preke">
+        <PropertyRef Name="Kategorija" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uzsakymas_Pirkejas">
+    <End Role="Pirkejas" Type="Self.Pirkejas" Multiplicity="1" />
+    <End Role="Uzsakymas" Type="Self.Uzsakymas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pirkejas">
+        <PropertyRef Name="Nr" />
+      </Principal>
+      <Dependent Role="Uzsakymas">
+        <PropertyRef Name="Pirkejas" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uzsakymo_info_Preke">
+    <End Role="Preke" Type="Self.Preke" Multiplicity="1" />
+    <End Role="Uzsakymo_info" Type="Self.Uzsakymo_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Preke">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Uzsakymo_info">
+        <PropertyRef Name="Preke_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uzsakymo_info_Uzsakymas">
+    <End Role="Uzsakymas" Type="Self.Uzsakymas" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Uzsakymo_info" Type="Self.Uzsakymo_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uzsakymas">
+        <PropertyRef Name="Nr" />
+      </Principal>
+      <Dependent Role="Uzsakymo_info">
+        <PropertyRef Name="Uzsakymas_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EshopDatabaseModelStoreContainer">
+    <EntitySet Name="Kategorija" EntityType="Self.Kategorija" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pirkejas" EntityType="Self.Pirkejas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Preke" EntityType="Self.Preke" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Uzsakymas" EntityType="Self.Uzsakymas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Uzsakymo_info" EntityType="Self.Uzsakymo_info" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Preke_ToKategorija" Association="Self.FK_Preke_ToKategorija">
+      <End Role="Kategorija" EntitySet="Kategorija" />
+      <End Role="Preke" EntitySet="Preke" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uzsakymas_Pirkejas" Association="Self.FK_Uzsakymas_Pirkejas">
+      <End Role="Pirkejas" EntitySet="Pirkejas" />
+      <End Role="Uzsakymas" EntitySet="Uzsakymas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uzsakymo_info_Preke" Association="Self.FK_Uzsakymo_info_Preke">
+      <End Role="Preke" EntitySet="Preke" />
+      <End Role="Uzsakymo_info" EntitySet="Uzsakymo_info" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uzsakymo_info_Uzsakymas" Association="Self.FK_Uzsakymo_info_Uzsakymas">
+      <End Role="Uzsakymas" EntitySet="Uzsakymas" />
+      <End Role="Uzsakymo_info" EntitySet="Uzsakymo_info" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

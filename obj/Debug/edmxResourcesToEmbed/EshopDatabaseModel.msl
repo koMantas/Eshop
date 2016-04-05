@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EshopDatabaseModelStoreContainer" CdmEntityContainer="EshopDBContext">
+    <EntitySetMapping Name="Kategorija">
+      <EntityTypeMapping TypeName="EshopDatabaseModel.Kategorija">
+        <MappingFragment StoreEntitySet="Kategorija">
+          <ScalarProperty Name="Nr" ColumnName="Nr" />
+          <ScalarProperty Name="Pavadinimas" ColumnName="Pavadinimas" />
+          <ScalarProperty Name="Nuolaida" ColumnName="Nuolaida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pirkejas">
+      <EntityTypeMapping TypeName="EshopDatabaseModel.Pirkejas">
+        <MappingFragment StoreEntitySet="Pirkejas">
+          <ScalarProperty Name="Nr" ColumnName="Nr" />
+          <ScalarProperty Name="Vardas" ColumnName="Vardas" />
+          <ScalarProperty Name="Pavarde" ColumnName="Pavarde" />
+          <ScalarProperty Name="Tel_NR" ColumnName="Tel_NR" />
+          <ScalarProperty Name="El_pastas" ColumnName="El_pastas" />
+          <ScalarProperty Name="Miestas" ColumnName="Miestas" />
+          <ScalarProperty Name="Gatve" ColumnName="Gatve" />
+          <ScalarProperty Name="Namas" ColumnName="Namas" />
+          <ScalarProperty Name="Butas" ColumnName="Butas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preke">
+      <EntityTypeMapping TypeName="EshopDatabaseModel.Preke">
+        <MappingFragment StoreEntitySet="Preke">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pavadinimas" ColumnName="Pavadinimas" />
+          <ScalarProperty Name="Kaina" ColumnName="Kaina" />
+          <ScalarProperty Name="Kategorija" ColumnName="Kategorija" />
+          <ScalarProperty Name="Gamintojas" ColumnName="Gamintojas" />
+          <ScalarProperty Name="Garantija" ColumnName="Garantija" />
+          <ScalarProperty Name="Liko" ColumnName="Liko" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Uzsakymas">
+      <EntityTypeMapping TypeName="EshopDatabaseModel.Uzsakymas">
+        <MappingFragment StoreEntitySet="Uzsakymas">
+          <ScalarProperty Name="Nr" ColumnName="Nr" />
+          <ScalarProperty Name="Pirkejas" ColumnName="Pirkejas" />
+          <ScalarProperty Name="Priemimo_data" ColumnName="Priemimo_data" />
+          <ScalarProperty Name="Sandeliavimo_data" ColumnName="Sandeliavimo_data" />
+          <ScalarProperty Name="Atidavimo_data" ColumnName="Atidavimo_data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Uzsakymo_info">
+      <EntityTypeMapping TypeName="EshopDatabaseModel.Uzsakymo_info">
+        <MappingFragment StoreEntitySet="Uzsakymo_info">
+          <ScalarProperty Name="Uzsakymas_ID" ColumnName="Uzsakymas_ID" />
+          <ScalarProperty Name="Preke_ID" ColumnName="Preke_ID" />
+          <ScalarProperty Name="Kiekis" ColumnName="Kiekis" />
+          <ScalarProperty Name="Kaina" ColumnName="Kaina" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

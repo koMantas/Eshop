@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="487955254647439aaf89f1c625986f7c" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="EshopDatabaseModel.Kategorija" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EshopDatabaseModel.Pirkejas" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EshopDatabaseModel.Preke" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EshopDatabaseModel.Uzsakymas" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EshopDatabaseModel.Uzsakymo_info" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="EshopDatabaseModel.FK_Preke_ToKategorija" ManuallyRouted="false" />
+        <AssociationConnector Association="EshopDatabaseModel.FK_Uzsakymas_Pirkejas" ManuallyRouted="false" />
+        <AssociationConnector Association="EshopDatabaseModel.FK_Uzsakymo_info_Preke" ManuallyRouted="false" />
+        <AssociationConnector Association="EshopDatabaseModel.FK_Uzsakymo_info_Uzsakymas" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EshopDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Kategorija">
+    <Key>
+      <PropertyRef Name="Nr" />
+    </Key>
+    <Property Name="Nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Pavadinimas" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nuolaida" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Preke" Relationship="Self.FK_Preke_ToKategorija" FromRole="Kategorija" ToRole="Preke" />
+  </EntityType>
+  <EntityType Name="Pirkejas">
+    <Key>
+      <PropertyRef Name="Nr" />
+    </Key>
+    <Property Name="Nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vardas" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Pavarde" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tel_NR" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+    <Property Name="El_pastas" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Miestas" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Gatve" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Namas" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Butas" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Uzsakymas" Relationship="Self.FK_Uzsakymas_Pirkejas" FromRole="Pirkejas" ToRole="Uzsakymas" />
+  </EntityType>
+  <EntityType Name="Preke">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Pavadinimas" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Kaina" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+    <Property Name="Kategorija" Type="Int32" />
+    <Property Name="Gamintojas" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Garantija" Type="Int16" Nullable="false" />
+    <Property Name="Liko" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kategorija1" Relationship="Self.FK_Preke_ToKategorija" FromRole="Preke" ToRole="Kategorija" />
+    <NavigationProperty Name="Uzsakymo_info" Relationship="Self.FK_Uzsakymo_info_Preke" FromRole="Preke" ToRole="Uzsakymo_info" />
+  </EntityType>
+  <EntityType Name="Uzsakymas">
+    <Key>
+      <PropertyRef Name="Nr" />
+    </Key>
+    <Property Name="Nr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Pirkejas" Type="Int32" Nullable="false" />
+    <Property Name="Priemimo_data" Type="DateTime" Precision="0" />
+    <Property Name="Sandeliavimo_data" Type="DateTime" Precision="0" />
+    <Property Name="Atidavimo_data" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Pirkejas1" Relationship="Self.FK_Uzsakymas_Pirkejas" FromRole="Uzsakymas" ToRole="Pirkejas" />
+    <NavigationProperty Name="Uzsakymo_info" Relationship="Self.FK_Uzsakymo_info_Uzsakymas" FromRole="Uzsakymas" ToRole="Uzsakymo_info" />
+  </EntityType>
+  <EntityType Name="Uzsakymo_info">
+    <Key>
+      <PropertyRef Name="Uzsakymas_ID" />
+      <PropertyRef Name="Preke_ID" />
+    </Key>
+    <Property Name="Uzsakymas_ID" Type="Int32" Nullable="false" />
+    <Property Name="Preke_ID" Type="Int32" Nullable="false" />
+    <Property Name="Kiekis" Type="Int32" Nullable="false" />
+    <Property Name="Kaina" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Preke" Relationship="Self.FK_Uzsakymo_info_Preke" FromRole="Uzsakymo_info" ToRole="Preke" />
+    <NavigationProperty Name="Uzsakymas" Relationship="Self.FK_Uzsakymo_info_Uzsakymas" FromRole="Uzsakymo_info" ToRole="Uzsakymas" />
+  </EntityType>
+  <Association Name="FK_Preke_ToKategorija">
+    <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="0..1" />
+    <End Role="Preke" Type="Self.Preke" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorija">
+        <PropertyRef Name="Nr" />
+      </Principal>
+      <Dependent Role="Preke">
+        <PropertyRef Name="Kategorija" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uzsakymas_Pirkejas">
+    <End Role="Pirkejas" Type="Self.Pirkejas" Multiplicity="1" />
+    <End Role="Uzsakymas" Type="Self.Uzsakymas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pirkejas">
+        <PropertyRef Name="Nr" />
+      </Principal>
+      <Dependent Role="Uzsakymas">
+        <PropertyRef Name="Pirkejas" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uzsakymo_info_Preke">
+    <End Role="Preke" Type="Self.Preke" Multiplicity="1" />
+    <End Role="Uzsakymo_info" Type="Self.Uzsakymo_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Preke">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Uzsakymo_info">
+        <PropertyRef Name="Preke_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uzsakymo_info_Uzsakymas">
+    <End Role="Uzsakymas" Type="Self.Uzsakymas" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Uzsakymo_info" Type="Self.Uzsakymo_info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uzsakymas">
+        <PropertyRef Name="Nr" />
+      </Principal>
+      <Dependent Role="Uzsakymo_info">
+        <PropertyRef Name="Uzsakymas_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EshopDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategorija" EntityType="Self.Kategorija" />
+    <EntitySet Name="Pirkejas" EntityType="Self.Pirkejas" />
+    <EntitySet Name="Preke" EntityType="Self.Preke" />
+    <EntitySet Name="Uzsakymas" EntityType="Self.Uzsakymas" />
+    <EntitySet Name="Uzsakymo_info" EntityType="Self.Uzsakymo_info" />
+    <AssociationSet Name="FK_Preke_ToKategorija" Association="Self.FK_Preke_ToKategorija">
+      <End Role="Kategorija" EntitySet="Kategorija" />
+      <End Role="Preke" EntitySet="Preke" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uzsakymas_Pirkejas" Association="Self.FK_Uzsakymas_Pirkejas">
+      <End Role="Pirkejas" EntitySet="Pirkejas" />
+      <End Role="Uzsakymas" EntitySet="Uzsakymas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uzsakymo_info_Preke" Association="Self.FK_Uzsakymo_info_Preke">
+      <End Role="Preke" EntitySet="Preke" />
+      <End Role="Uzsakymo_info" EntitySet="Uzsakymo_info" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uzsakymo_info_Uzsakymas" Association="Self.FK_Uzsakymo_info_Uzsakymas">
+      <End Role="Uzsakymas" EntitySet="Uzsakymas" />
+      <End Role="Uzsakymo_info" EntitySet="Uzsakymo_info" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
